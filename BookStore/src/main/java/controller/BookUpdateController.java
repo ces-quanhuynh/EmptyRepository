@@ -14,10 +14,8 @@ import java.io.IOException;
 
 @WebServlet("/BookUpdate")
 public class BookUpdateController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+
     BookService bookService = new BookServiceImpl();
-    String nameBook = "";
-    String nameAuthor = "";
     Integer idBook = 0;
 
     @Override
@@ -32,8 +30,8 @@ public class BookUpdateController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        nameBook = request.getParameter("nameBook");
-        nameAuthor = request.getParameter("nameAuthor");
+        String nameBook = request.getParameter("nameBook");
+        String nameAuthor = request.getParameter("nameAuthor");
         boolean key = bookService.update(idBook,nameBook,nameAuthor);
         if(key){
             response.sendRedirect(request.getContextPath()+"/BookList");

@@ -13,16 +13,12 @@ import java.io.IOException;
 @WebServlet("/BookDelete")
 public class BookDeleteController extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
     BookService bookService = new BookServiceImpl();;
-
-    public BookDeleteController(){
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer idAuthor = Integer.parseInt(request.getParameter("bookIdDelete"));
-        bookService.delete(idAuthor);
+        Integer idBook = Integer.parseInt(request.getParameter("bookIdDelete"));
+        bookService.delete(idBook);
         response.sendRedirect(request.getContextPath()+"/BookList");
     }
 

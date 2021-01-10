@@ -15,12 +15,9 @@ import java.util.Random;
 
 @WebServlet("/BookInsert")
 public class BookInsertController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+
     BookService bookService = new BookServiceImpl();
     Integer idPresent = 3;
-//    BookInsertController(){
-//
-//    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

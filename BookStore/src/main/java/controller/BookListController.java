@@ -16,11 +16,7 @@ import java.util.List;
 @WebServlet("/BookList")
 public class BookListController extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
     BookService bookService = new BookServiceImpl();
-
-    public BookListController(){
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,10 +24,5 @@ public class BookListController extends HttpServlet {
         request.setAttribute("books",books);
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/BookViewJSP.jsp");
         dispatcher.forward(request,response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        super.doGet(request, response);
     }
 }
