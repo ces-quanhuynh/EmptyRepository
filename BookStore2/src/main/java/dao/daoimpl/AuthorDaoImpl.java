@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import util.HibernateUtil;
 
+import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public boolean saveAuthor(AuthorEntity authorEntity) {
-        if(!checkAuthorNotAvailable(authorEntity)){
+        if(checkExistByName(authorEntity.getNameAuthor())){
             return false;
         }
         boolean result = false;
@@ -51,7 +52,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public boolean updateAuthor(Integer id,AuthorEntity authorEntity) {
-        if(!checkAuthorNotAvailable(authorEntity)){
+        if(checkExistByName(authorEntity.getNameAuthor())){
             return false;
         }
         boolean result = false;
@@ -94,9 +95,12 @@ public class AuthorDaoImpl implements AuthorDao {
         return result;
     }
 
-    boolean checkAuthorNotAvailable(AuthorEntity authorEntity){
-        List<AuthorEntity> list = getAllAuthors();
-        AuthorEntity authorCheckedAvailable = list.stream().filter(author -> author.getNameAuthor().equals(authorEntity.getNameAuthor())).findAny().orElse(null);
-        return authorCheckedAvailable==null?true:false;
+    boolean checkExistByName(String authorName){
+        String sql = "select count(*) from author where nameauthor=?";
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createNativeQuery(sql);
+        query.setParameter(1,authorName);
+        int count = ((BigInteger)query.uniqueResult()).intValue();
+        return count>0?true:false;
     }
 }
