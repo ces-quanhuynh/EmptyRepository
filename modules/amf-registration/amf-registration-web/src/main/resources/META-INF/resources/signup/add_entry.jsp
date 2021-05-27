@@ -1,5 +1,11 @@
 <%@ include file="../init.jsp" %>
 
+<c:if test="<%= themeDisplay.isSignedIn()%>">
+    <%
+        renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.FALSE);
+    %>
+</c:if>
+
 <%
     Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
     birthdayCalendar.set(Calendar.MONTH,Calendar.JANUARY);
