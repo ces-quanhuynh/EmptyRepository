@@ -1,0 +1,4 @@
+Bundle-Name: amf-searchresult-web
+Bundle-SymbolicName: com.liferay.searchresult.web
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.searchresult.web.constants
