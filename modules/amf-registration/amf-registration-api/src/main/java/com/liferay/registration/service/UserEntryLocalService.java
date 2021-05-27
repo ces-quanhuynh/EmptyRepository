@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -34,6 +35,7 @@ import com.liferay.registration.model.UserEntry;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -60,6 +62,20 @@ public interface UserEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.registration.service.impl.UserEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the user entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link UserEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public UserEntry addUserEntry(
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, long facebookId,
+			String openId, Locale locale, String firstName, String middleName,
+			String lastName, long prefixId, long suffixId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			String homePhone, String mobilePhone, String address1,
+			String address2, String city, String state, String zipCode,
+			String securityQuestion, String securityAnswer,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the user entry to the database. Also notifies the appropriate model listeners.

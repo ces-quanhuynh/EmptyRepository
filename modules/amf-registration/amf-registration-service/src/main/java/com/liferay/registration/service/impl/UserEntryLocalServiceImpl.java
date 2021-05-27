@@ -15,9 +15,17 @@
 package com.liferay.registration.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.registration.model.UserEntry;
 import com.liferay.registration.service.base.UserEntryLocalServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import java.util.Locale;
 
 /**
  * The implementation of the user entry local service.
@@ -43,4 +51,41 @@ public class UserEntryLocalServiceImpl extends UserEntryLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.registration.service.UserEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.registration.service.UserEntryLocalServiceUtil</code>.
 	 */
+	public UserEntry addUserEntry(long creatorUserId, long companyId, boolean autoPassword, String password1, String password2,
+								  boolean autoScreenName, String screenName, String emailAddress, long facebookId,
+								  String openId, Locale locale, String firstName, String middleName, String lastName,
+								  long prefixId, long suffixId, boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+								  String jobTitle, long[] groupIds, long[] organizationIds, long[] roleIds, long[] userGroupIds,
+								  boolean sendEmail, String homePhone, String mobilePhone, String address1, String address2,
+								  String city, String state, String zipCode, String securityQuestion, String securityAnswer,
+								  ServiceContext serviceContext) throws PortalException {
+
+		long userEntryId = counterLocalService.increment();
+
+		UserEntry userEntry = userEntryPersistence.create(userEntryId);
+
+		User user = _userLocalService.addUserWithWorkflow(creatorUserId, companyId, autoPassword, password1, password2,
+				autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName,
+				prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+				roleIds, groupIds, sendEmail, serviceContext);
+
+		_userLocalService.updateReminderQuery(user.getUserId(),securityQuestion,securityAnswer);
+
+		userEntry.setUuid(serviceContext.getUuid());
+		userEntry.setHomePhone(homePhone);
+		userEntry.setMobilePhone(mobilePhone);
+		userEntry.setAddress1(address1);
+		userEntry.setAddress1(address2);
+		userEntry.setCity(city);
+		userEntry.setState(state);
+		userEntry.setZipCode(zipCode);
+		userEntry.setUserId(user.getUserId());
+
+		userEntryPersistence.update(userEntry);
+
+		return userEntry;
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 }

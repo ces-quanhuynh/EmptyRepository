@@ -32,6 +32,32 @@ public class UserEntryLocalServiceWrapper
 		_userEntryLocalService = userEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.registration.model.UserEntry addUserEntry(
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, long facebookId,
+			String openId, java.util.Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			String homePhone, String mobilePhone, String address1,
+			String address2, String city, String state, String zipCode,
+			String securityQuestion, String securityAnswer,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userEntryLocalService.addUserEntry(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, homePhone,
+			mobilePhone, address1, address2, city, state, zipCode,
+			securityQuestion, securityAnswer, serviceContext);
+	}
+
 	/**
 	 * Adds the user entry to the database. Also notifies the appropriate model listeners.
 	 *
