@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.registration.model.UserEntry;
 import com.liferay.registration.service.base.UserEntryLocalServiceBaseImpl;
 
+import com.liferay.registration.validator.BasicInfoValidator;
+import com.liferay.registration.validator.BillingAddressValidator;
+import com.liferay.registration.validator.PhoneValidator;
+import com.liferay.registration.validator.SecurityQuestionValidator;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -69,6 +73,11 @@ public class UserEntryLocalServiceImpl extends UserEntryLocalServiceBaseImpl {
 				prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 				roleIds, groupIds, sendEmail, serviceContext);
 
+		_basicInfoValidator.validate(firstName,lastName,emailAddress,screenName,birthdayMonth,birthdayDay,birthdayYear,password1,password2);
+		_phoneValidator.validate(homePhone,mobilePhone);
+		_billingAddressValidator.validate(address1,address2,city,state,zipCode);
+		_seSecurityQuestionValidator.validate(securityAnswer);
+
 		_userLocalService.updateReminderQuery(user.getUserId(),securityQuestion,securityAnswer);
 
 		userEntry.setUuid(serviceContext.getUuid());
@@ -88,4 +97,16 @@ public class UserEntryLocalServiceImpl extends UserEntryLocalServiceBaseImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private BasicInfoValidator _basicInfoValidator;
+
+	@Reference
+	private PhoneValidator _phoneValidator;
+
+	@Reference
+	private BillingAddressValidator _billingAddressValidator;
+
+	@Reference
+	private SecurityQuestionValidator _seSecurityQuestionValidator;
 }

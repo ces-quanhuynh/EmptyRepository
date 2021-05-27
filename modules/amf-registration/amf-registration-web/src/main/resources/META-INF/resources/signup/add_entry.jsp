@@ -11,6 +11,40 @@
     ));
 %>
 
+<%--Basic Info--%>
+<liferay-ui:error exception="<%= BasicInfoValidationException.FirstNameMustNotBeNull.class%>" message="exception.first-name-must-not-be-null"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.FirstNameMustBeCorrect.class%>" message="exception.first-name-must-be-correct"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.LastNameMustNotBeNull.class%>" message="exception.last-name-must-not-be-null"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.LastNameMustBeCorrect.class%>" message="exception.last-name-must-be-correct"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.EmailMustNotBeNull.class%>" message="exception.email-must-not-be-null"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.EmailMustBeCorrect.class%>" message="exception.email-must-be-correct"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.ScreenNameMustNotBeNull.class%>" message="exception.username-must-not-be-null"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.ScreenNameMustBeCorrect.class%>" message="exception.username-must-be-correct"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.BirthdayMustNotBeNull.class%>" message="exception.birthday-must-not-be-null"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.BirthdayMustBeCorrect.class%>" message="exception.birthday-is-not-enough"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.PasswordMustNotBeNull.class%>" message="exception.password-must-not-be-null"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.PasswordMustBeCorrect.class%>" message="exception.password-must-be-correct"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.ConfirmedPasswordMustNotBeNull.class%>" message="exception.confirmed-password-must-not-be-null"/>
+<liferay-ui:error exception="<%= BasicInfoValidationException.ConfirmedPasswordMustBeCorrect.class%>" message="exception.confirmed-password-must-match-the-password"/>
+
+<%--Phone--%>
+<liferay-ui:error exception="<%= PhoneValidationException.MobilePhoneMustBeCorrect.class%>" message="exception.mobile-phone-numbers-must-be-10-digits"/>
+<liferay-ui:error exception="<%= PhoneValidationException.HomePhoneMustBeCorrect.class%>" message="exception.home-phone-numbers-must-be-10-digits"/>
+
+<%--Billing Address--%>
+<liferay-ui:error exception="<%= BillingAddressValidationException.Address1MustNotBeNull.class%>" message="exception.address1-must-not-be-null"/>
+<liferay-ui:error exception="<%= BillingAddressValidationException.Address1MustBeCorrect.class%>" message="exception.address1-must-be-correct"/>
+<liferay-ui:error exception="<%= BillingAddressValidationException.Address2MustBeCorrect.class%>" message="exception.address2-must-be-correct"/>
+<liferay-ui:error exception="<%= BillingAddressValidationException.CityMustNotBeNull.class%>" message="exception.city-must-not-be-null"/>
+<liferay-ui:error exception="<%= BillingAddressValidationException.CityMustBeCorrect.class%>" message="exception.city-must-be-correct"/>
+<liferay-ui:error exception="<%= BillingAddressValidationException.StateMustNotBeNull.class%>" message="exception.state-must-not-be-null"/>
+<liferay-ui:error exception="<%= BillingAddressValidationException.ZipCodeMustNotBeNull.class%>" message="exception.zip-code-must-not-be-null"/>
+<liferay-ui:error exception="<%= BillingAddressValidationException.ZipCodeMustBeCorrect.class%>" message="exception.zip-code-must-be-correct"/>
+
+<%--Security Question--%>
+<liferay-ui:error exception="<%= SecurityQuestionValidationException.AnswerMustNotBeNull.class%>" message="exception.security-answer-must-not-be-null"/>
+<liferay-ui:error exception="<%= SecurityQuestionValidationException.AnswerMustBeCorrect.class%>" message="exception.security-answer-must-be-correct"/>
+
 <portlet:actionURL name="<%= MVCCommandNames.ADD_USER_ENTRIES%>" var="addEntryURL" />
 
 <aui:form action="${addEntryURL}" name="<portlet:namespace/>fm">

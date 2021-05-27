@@ -6,10 +6,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.registration.exception.BasicInfoValidationException;
+import com.liferay.registration.exception.PhoneValidationException;
+import com.liferay.registration.exception.SecurityQuestionValidationException;
 import com.liferay.registration.model.UserEntry;
 import com.liferay.registration.service.UserEntryLocalService;
 import com.liferay.registration.web.constants.MVCCommandNames;
@@ -89,7 +93,16 @@ public class AddUserEntryMVCActionCommand extends BaseMVCActionCommand {
             actionResponse.sendRedirect("/c/portal/login");
 
         }catch (PortalException portalException){
-            throw portalException;
+            if(portalException instanceof BasicInfoValidationException || portalException instanceof PhoneValidationException
+                    || portalException instanceof BasicInfoValidationException || portalException instanceof SecurityQuestionValidationException){
+
+                SessionErrors.add(actionRequest,portalException.getClass(),portalException);
+
+                actionResponse.setRenderParameter("mvcRenderCommandName",MVCCommandNames.ADD_USER_ENTRIES);
+            }
+            else {
+                throw portalException;
+            }
         }
     }
 

@@ -6,6 +6,8 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
+<%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
 
 <%@ page import="java.util.Calendar" %>
 <%@ page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %>
@@ -16,6 +18,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.PropsKeys" %>
 <%@ page import="com.liferay.portal.kernel.model.Contact" %>
+<%@ page import="com.liferay.registration.exception.BasicInfoValidationException" %>
+<%@ page import="com.liferay.registration.exception.PhoneValidationException" %>
+<%@ page import="com.liferay.registration.exception.BillingAddressValidationException" %>
+<%@ page import="com.liferay.registration.exception.SecurityQuestionValidationException" %>
 
 <liferay-theme:defineObjects />
 

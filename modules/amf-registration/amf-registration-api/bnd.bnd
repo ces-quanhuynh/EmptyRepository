@@ -5,6 +5,8 @@ Export-Package:\
 	com.liferay.registration.exception,\
 	com.liferay.registration.model,\
 	com.liferay.registration.service,\
-	com.liferay.registration.service.persistence
+	com.liferay.registration.service.persistence,\
+    com.liferay.registration.validator,\
+    com.liferay.registration.util.validator,\
 -check: EXPORTS
 -includeresource: META-INF/service.xml=../amf-registration-service/service.xml
