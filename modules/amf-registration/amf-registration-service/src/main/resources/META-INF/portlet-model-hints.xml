@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.registration.model.UserEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="userEntryId" type="long" />
+		<field name="homePhone" type="String" />
+		<field name="mobilePhone" type="String" />
+		<field name="address1" type="String" />
+		<field name="address2" type="String" />
+		<field name="city" type="String" />
+		<field name="state" type="String" />
+		<field name="zipCode" type="String" />
+		<field name="userId" type="long" />
+	</model>
+</model-hints>

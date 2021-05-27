@@ -1,0 +1,1 @@
+create index IX_E9FAE508 on REGIS_UserEntry (uuid_[$COLUMN_LENGTH:75$]);
