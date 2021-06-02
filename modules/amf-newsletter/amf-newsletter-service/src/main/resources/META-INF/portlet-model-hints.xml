@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.newsletter.model.Issue">
+		<field name="uuid" type="String" />
+		<field name="issueId" type="long" />
+		<field name="title" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="issueDate" type="Date" />
+	</model>
+	<model name="com.liferay.newsletter.model.IssueArticle">
+		<field name="uuid" type="String" />
+		<field name="issueArticleId" type="long" />
+		<field name="issueId" type="long" />
+		<field name="title" type="String" />
+		<field name="author" type="String" />
+		<field name="order" type="long" />
+		<field name="content" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+</model-hints>

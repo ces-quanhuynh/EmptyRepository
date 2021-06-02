@@ -1,0 +1,10 @@
+Bundle-Name: amf-newsletter-api
+Bundle-SymbolicName: com.liferay.newsletter.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.newsletter.exception,\
+	com.liferay.newsletter.model,\
+	com.liferay.newsletter.service,\
+	com.liferay.newsletter.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../amf-newsletter-service/service.xml
