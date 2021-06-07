@@ -5,4 +5,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning"
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+
+	compileOnly group: "com.liferay", name: "com.liferay.journal.service"
+	compileOnly group: "com.liferay", name: "com.liferay.journal.api"
 }

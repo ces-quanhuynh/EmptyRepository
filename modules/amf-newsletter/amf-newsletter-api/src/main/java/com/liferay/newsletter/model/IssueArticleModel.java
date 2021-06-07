@@ -83,18 +83,18 @@ public interface IssueArticleModel extends BaseModel<IssueArticle> {
 	public void setIssueArticleId(long issueArticleId);
 
 	/**
-	 * Returns the issue ID of this issue article.
+	 * Returns the issue number of this issue article.
 	 *
-	 * @return the issue ID of this issue article
+	 * @return the issue number of this issue article
 	 */
-	public long getIssueId();
+	public long getIssueNumber();
 
 	/**
-	 * Sets the issue ID of this issue article.
+	 * Sets the issue number of this issue article.
 	 *
-	 * @param issueId the issue ID of this issue article
+	 * @param issueNumber the issue number of this issue article
 	 */
-	public void setIssueId(long issueId);
+	public void setIssueNumber(long issueNumber);
 
 	/**
 	 * Returns the title of this issue article.

@@ -70,8 +70,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"issueId", Types.BIGINT},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"issueDate", Types.TIMESTAMP}
+		{"issueNumber", Types.BIGINT}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"issueDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -80,13 +80,14 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("issueId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("issueNumber", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("issueDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NL_Issue (uuid_ VARCHAR(75) null,issueId LONG not null primary key,title VARCHAR(75) null,description STRING null,issueDate DATE null)";
+		"create table NL_Issue (uuid_ VARCHAR(75) null,issueId LONG not null primary key,issueNumber LONG,title VARCHAR(75) null,description STRING null,issueDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table NL_Issue";
 
@@ -128,6 +129,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		model.setUuid(soapModel.getUuid());
 		model.setIssueId(soapModel.getIssueId());
+		model.setIssueNumber(soapModel.getIssueNumber());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setIssueDate(soapModel.getIssueDate());
@@ -282,6 +284,9 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		attributeGetterFunctions.put("issueId", Issue::getIssueId);
 		attributeSetterBiConsumers.put(
 			"issueId", (BiConsumer<Issue, Long>)Issue::setIssueId);
+		attributeGetterFunctions.put("issueNumber", Issue::getIssueNumber);
+		attributeSetterBiConsumers.put(
+			"issueNumber", (BiConsumer<Issue, Long>)Issue::setIssueNumber);
 		attributeGetterFunctions.put("title", Issue::getTitle);
 		attributeSetterBiConsumers.put(
 			"title", (BiConsumer<Issue, String>)Issue::setTitle);
@@ -333,6 +338,17 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	@Override
 	public void setIssueId(long issueId) {
 		_issueId = issueId;
+	}
+
+	@JSON
+	@Override
+	public long getIssueNumber() {
+		return _issueNumber;
+	}
+
+	@Override
+	public void setIssueNumber(long issueNumber) {
+		_issueNumber = issueNumber;
 	}
 
 	@JSON
@@ -416,6 +432,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 
 		issueImpl.setUuid(getUuid());
 		issueImpl.setIssueId(getIssueId());
+		issueImpl.setIssueNumber(getIssueNumber());
 		issueImpl.setTitle(getTitle());
 		issueImpl.setDescription(getDescription());
 		issueImpl.setIssueDate(getIssueDate());
@@ -497,6 +514,8 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 		}
 
 		issueCacheModel.issueId = getIssueId();
+
+		issueCacheModel.issueNumber = getIssueNumber();
 
 		issueCacheModel.title = getTitle();
 
@@ -600,6 +619,7 @@ public class IssueModelImpl extends BaseModelImpl<Issue> implements IssueModel {
 	private String _uuid;
 	private String _originalUuid;
 	private long _issueId;
+	private long _issueNumber;
 	private String _title;
 	private String _description;
 	private Date _issueDate;

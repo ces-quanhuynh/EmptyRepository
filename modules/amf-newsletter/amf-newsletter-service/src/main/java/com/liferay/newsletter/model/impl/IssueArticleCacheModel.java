@@ -66,8 +66,8 @@ public class IssueArticleCacheModel
 		sb.append(uuid);
 		sb.append(", issueArticleId=");
 		sb.append(issueArticleId);
-		sb.append(", issueId=");
-		sb.append(issueId);
+		sb.append(", issueNumber=");
+		sb.append(issueNumber);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", author=");
@@ -93,7 +93,7 @@ public class IssueArticleCacheModel
 		}
 
 		issueArticleImpl.setIssueArticleId(issueArticleId);
-		issueArticleImpl.setIssueId(issueId);
+		issueArticleImpl.setIssueNumber(issueNumber);
 
 		if (title == null) {
 			issueArticleImpl.setTitle("");
@@ -129,7 +129,7 @@ public class IssueArticleCacheModel
 
 		issueArticleId = objectInput.readLong();
 
-		issueId = objectInput.readLong();
+		issueNumber = objectInput.readLong();
 		title = objectInput.readUTF();
 		author = objectInput.readUTF();
 
@@ -148,7 +148,7 @@ public class IssueArticleCacheModel
 
 		objectOutput.writeLong(issueArticleId);
 
-		objectOutput.writeLong(issueId);
+		objectOutput.writeLong(issueNumber);
 
 		if (title == null) {
 			objectOutput.writeUTF("");
@@ -176,7 +176,7 @@ public class IssueArticleCacheModel
 
 	public String uuid;
 	public long issueArticleId;
-	public long issueId;
+	public long issueNumber;
 	public String title;
 	public String author;
 	public long order;

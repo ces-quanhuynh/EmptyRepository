@@ -4,6 +4,7 @@
 	<model name="com.liferay.newsletter.model.Issue">
 		<field name="uuid" type="String" />
 		<field name="issueId" type="long" />
+		<field name="issueNumber" type="long" />
 		<field name="title" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
@@ -13,7 +14,7 @@
 	<model name="com.liferay.newsletter.model.IssueArticle">
 		<field name="uuid" type="String" />
 		<field name="issueArticleId" type="long" />
-		<field name="issueId" type="long" />
+		<field name="issueNumber" type="long" />
 		<field name="title" type="String" />
 		<field name="author" type="String" />
 		<field name="order" type="long" />

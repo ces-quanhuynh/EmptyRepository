@@ -32,7 +32,7 @@ public class IssueArticleSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setIssueArticleId(model.getIssueArticleId());
-		soapModel.setIssueId(model.getIssueId());
+		soapModel.setIssueNumber(model.getIssueNumber());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setAuthor(model.getAuthor());
 		soapModel.setOrder(model.getOrder());
@@ -106,12 +106,12 @@ public class IssueArticleSoap implements Serializable {
 		_issueArticleId = issueArticleId;
 	}
 
-	public long getIssueId() {
-		return _issueId;
+	public long getIssueNumber() {
+		return _issueNumber;
 	}
 
-	public void setIssueId(long issueId) {
-		_issueId = issueId;
+	public void setIssueNumber(long issueNumber) {
+		_issueNumber = issueNumber;
 	}
 
 	public String getTitle() {
@@ -148,7 +148,7 @@ public class IssueArticleSoap implements Serializable {
 
 	private String _uuid;
 	private long _issueArticleId;
-	private long _issueId;
+	private long _issueNumber;
 	private String _title;
 	private String _author;
 	private long _order;

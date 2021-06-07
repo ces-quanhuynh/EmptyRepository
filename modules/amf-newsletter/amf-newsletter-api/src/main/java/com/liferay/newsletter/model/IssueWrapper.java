@@ -43,6 +43,7 @@ public class IssueWrapper
 
 		attributes.put("uuid", getUuid());
 		attributes.put("issueId", getIssueId());
+		attributes.put("issueNumber", getIssueNumber());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("issueDate", getIssueDate());
@@ -62,6 +63,12 @@ public class IssueWrapper
 
 		if (issueId != null) {
 			setIssueId(issueId);
+		}
+
+		Long issueNumber = (Long)attributes.get("issueNumber");
+
+		if (issueNumber != null) {
+			setIssueNumber(issueNumber);
 		}
 
 		String title = (String)attributes.get("title");
@@ -111,6 +118,16 @@ public class IssueWrapper
 	@Override
 	public long getIssueId() {
 		return model.getIssueId();
+	}
+
+	/**
+	 * Returns the issue number of this issue.
+	 *
+	 * @return the issue number of this issue
+	 */
+	@Override
+	public long getIssueNumber() {
+		return model.getIssueNumber();
 	}
 
 	/**
@@ -176,6 +193,16 @@ public class IssueWrapper
 	@Override
 	public void setIssueId(long issueId) {
 		model.setIssueId(issueId);
+	}
+
+	/**
+	 * Sets the issue number of this issue.
+	 *
+	 * @param issueNumber the issue number of this issue
+	 */
+	@Override
+	public void setIssueNumber(long issueNumber) {
+		model.setIssueNumber(issueNumber);
 	}
 
 	/**

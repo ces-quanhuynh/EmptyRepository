@@ -60,12 +60,14 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", issueId=");
 		sb.append(issueId);
+		sb.append(", issueNumber=");
+		sb.append(issueNumber);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", description=");
@@ -89,6 +91,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 		}
 
 		issueImpl.setIssueId(issueId);
+		issueImpl.setIssueNumber(issueNumber);
 
 		if (title == null) {
 			issueImpl.setTitle("");
@@ -121,6 +124,8 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 		uuid = objectInput.readUTF();
 
 		issueId = objectInput.readLong();
+
+		issueNumber = objectInput.readLong();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		issueDate = objectInput.readLong();
@@ -136,6 +141,8 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 		}
 
 		objectOutput.writeLong(issueId);
+
+		objectOutput.writeLong(issueNumber);
 
 		if (title == null) {
 			objectOutput.writeUTF("");
@@ -156,6 +163,7 @@ public class IssueCacheModel implements CacheModel<Issue>, Externalizable {
 
 	public String uuid;
 	public long issueId;
+	public long issueNumber;
 	public String title;
 	public String description;
 	public long issueDate;

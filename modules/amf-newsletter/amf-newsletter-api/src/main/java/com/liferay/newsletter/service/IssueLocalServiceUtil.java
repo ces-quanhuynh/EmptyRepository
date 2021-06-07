@@ -203,6 +203,14 @@ public class IssueLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.newsletter.model.Issue>
+			getAllIssues(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.text.ParseException {
+
+		return getService().getAllIssues(groupId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -221,6 +229,14 @@ public class IssueLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getIssue(issueId);
+	}
+
+	public static com.liferay.newsletter.model.Issue getIssue(
+			long groupId, String articleId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.text.ParseException {
+
+		return getService().getIssue(groupId, articleId);
 	}
 
 	/**
@@ -266,6 +282,14 @@ public class IssueLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static int haveIssue(
+		com.liferay.journal.model.JournalArticle journalArticle,
+		java.util.List<com.liferay.journal.model.JournalArticle>
+			journalArticles) {
+
+		return getService().haveIssue(journalArticle, journalArticles);
 	}
 
 	/**

@@ -14,10 +14,22 @@
 
 package com.liferay.newsletter.service.impl;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.newsletter.model.Issue;
 import com.liferay.newsletter.service.base.IssueLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The implementation of the issue local service.
@@ -43,4 +55,68 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.newsletter.service.IssueLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.newsletter.service.IssueLocalServiceUtil</code>.
 	 */
+
+	public Issue getIssue(long groupId, String articleId) throws PortalException, ParseException {
+
+		JournalArticle journalArticle = _journalArticleLocalService.getArticle(groupId, articleId);
+		List<String> dataFromContent = new ArrayList<>();
+
+		long issueId = counterLocalService.increment();
+
+		Issue issue = issuePersistence.create(issueId);
+		String xml = journalArticle.getContent();
+
+		for(int i=0;i<4;i++){
+			String data = xml.substring(xml.indexOf("[CDATA")+7,xml.indexOf("]]></dynamic-content>"));
+			dataFromContent.add(data);
+			xml = xml.substring(xml.indexOf("]]></dynamic-content>")+21);
+		}
+
+		issue.setIssueNumber(Long.parseLong(dataFromContent.get(0)));
+
+		issue.setTitle(dataFromContent.get(1));
+
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dataFromContent.get(2));
+		issue.setIssueDate(date);
+
+		issue.setDescription(dataFromContent.get(3));
+
+		issuePersistence.updateImpl(issue);
+
+		return issue;
+	}
+
+	public List<Issue> getAllIssues(long groupId) throws PortalException, ParseException {
+		List<JournalArticle> journalArticles = _journalArticleLocalService.getArticles(groupId);
+		List<JournalArticle> journalArticleNewVersion = new ArrayList<>();
+		List<Issue> issues = new ArrayList<>();
+
+		for(int j = 0;j<journalArticles.size();j++){
+			int check = haveIssue(journalArticles.get(j),journalArticleNewVersion);
+			if (check != -1) {
+				journalArticleNewVersion.remove(check);
+			}
+			journalArticleNewVersion.add(journalArticles.get(j));
+		}
+
+		journalArticleNewVersion = journalArticleNewVersion.stream().filter(journalArticle -> journalArticle.getDDMStructureKey().equals("35679")).collect(Collectors.toList());
+
+		for(int i = 0; i < journalArticleNewVersion.size(); i++){
+			issues.add(getIssue(groupId,journalArticleNewVersion.get(i).getArticleId()));
+		}
+
+		return issues;
+	}
+
+	public int haveIssue(JournalArticle journalArticle, List<JournalArticle> journalArticles){
+		for(int i=0; i<journalArticles.size();i++){
+			if(journalArticles.get(i).getArticleId().equals(journalArticle.getArticleId())){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	@Reference
+	public JournalArticleLocalService _journalArticleLocalService;
 }

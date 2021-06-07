@@ -33,6 +33,7 @@ public class IssueSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setIssueId(model.getIssueId());
+		soapModel.setIssueNumber(model.getIssueNumber());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setIssueDate(model.getIssueDate());
@@ -104,6 +105,14 @@ public class IssueSoap implements Serializable {
 		_issueId = issueId;
 	}
 
+	public long getIssueNumber() {
+		return _issueNumber;
+	}
+
+	public void setIssueNumber(long issueNumber) {
+		_issueNumber = issueNumber;
+	}
+
 	public String getTitle() {
 		return _title;
 	}
@@ -130,6 +139,7 @@ public class IssueSoap implements Serializable {
 
 	private String _uuid;
 	private long _issueId;
+	private long _issueNumber;
 	private String _title;
 	private String _description;
 	private Date _issueDate;

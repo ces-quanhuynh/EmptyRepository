@@ -69,7 +69,7 @@ public class IssueArticleModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"issueArticleId", Types.BIGINT},
-		{"issueId", Types.BIGINT}, {"title", Types.VARCHAR},
+		{"issueNumber", Types.BIGINT}, {"title", Types.VARCHAR},
 		{"author", Types.VARCHAR}, {"order_", Types.BIGINT},
 		{"content", Types.VARCHAR}
 	};
@@ -80,7 +80,7 @@ public class IssueArticleModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("issueArticleId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("issueId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("issueNumber", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("author", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("order_", Types.BIGINT);
@@ -88,7 +88,7 @@ public class IssueArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NL_IssueArticle (uuid_ VARCHAR(75) null,issueArticleId LONG not null primary key,issueId LONG,title VARCHAR(75) null,author VARCHAR(75) null,order_ LONG,content STRING null)";
+		"create table NL_IssueArticle (uuid_ VARCHAR(75) null,issueArticleId LONG not null primary key,issueNumber LONG,title VARCHAR(75) null,author VARCHAR(75) null,order_ LONG,content STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table NL_IssueArticle";
 
@@ -131,7 +131,7 @@ public class IssueArticleModelImpl
 
 		model.setUuid(soapModel.getUuid());
 		model.setIssueArticleId(soapModel.getIssueArticleId());
-		model.setIssueId(soapModel.getIssueId());
+		model.setIssueNumber(soapModel.getIssueNumber());
 		model.setTitle(soapModel.getTitle());
 		model.setAuthor(soapModel.getAuthor());
 		model.setOrder(soapModel.getOrder());
@@ -296,10 +296,11 @@ public class IssueArticleModelImpl
 		attributeSetterBiConsumers.put(
 			"issueArticleId",
 			(BiConsumer<IssueArticle, Long>)IssueArticle::setIssueArticleId);
-		attributeGetterFunctions.put("issueId", IssueArticle::getIssueId);
+		attributeGetterFunctions.put(
+			"issueNumber", IssueArticle::getIssueNumber);
 		attributeSetterBiConsumers.put(
-			"issueId",
-			(BiConsumer<IssueArticle, Long>)IssueArticle::setIssueId);
+			"issueNumber",
+			(BiConsumer<IssueArticle, Long>)IssueArticle::setIssueNumber);
 		attributeGetterFunctions.put("title", IssueArticle::getTitle);
 		attributeSetterBiConsumers.put(
 			"title", (BiConsumer<IssueArticle, String>)IssueArticle::setTitle);
@@ -360,13 +361,13 @@ public class IssueArticleModelImpl
 
 	@JSON
 	@Override
-	public long getIssueId() {
-		return _issueId;
+	public long getIssueNumber() {
+		return _issueNumber;
 	}
 
 	@Override
-	public void setIssueId(long issueId) {
-		_issueId = issueId;
+	public void setIssueNumber(long issueNumber) {
+		_issueNumber = issueNumber;
 	}
 
 	@JSON
@@ -466,7 +467,7 @@ public class IssueArticleModelImpl
 
 		issueArticleImpl.setUuid(getUuid());
 		issueArticleImpl.setIssueArticleId(getIssueArticleId());
-		issueArticleImpl.setIssueId(getIssueId());
+		issueArticleImpl.setIssueNumber(getIssueNumber());
 		issueArticleImpl.setTitle(getTitle());
 		issueArticleImpl.setAuthor(getAuthor());
 		issueArticleImpl.setOrder(getOrder());
@@ -551,7 +552,7 @@ public class IssueArticleModelImpl
 
 		issueArticleCacheModel.issueArticleId = getIssueArticleId();
 
-		issueArticleCacheModel.issueId = getIssueId();
+		issueArticleCacheModel.issueNumber = getIssueNumber();
 
 		issueArticleCacheModel.title = getTitle();
 
@@ -658,7 +659,7 @@ public class IssueArticleModelImpl
 	private String _uuid;
 	private String _originalUuid;
 	private long _issueArticleId;
-	private long _issueId;
+	private long _issueNumber;
 	private String _title;
 	private String _author;
 	private long _order;

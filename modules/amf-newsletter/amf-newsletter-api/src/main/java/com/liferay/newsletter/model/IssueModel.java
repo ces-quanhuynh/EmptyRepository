@@ -85,6 +85,20 @@ public interface IssueModel extends BaseModel<Issue> {
 	public void setIssueId(long issueId);
 
 	/**
+	 * Returns the issue number of this issue.
+	 *
+	 * @return the issue number of this issue
+	 */
+	public long getIssueNumber();
+
+	/**
+	 * Sets the issue number of this issue.
+	 *
+	 * @param issueNumber the issue number of this issue
+	 */
+	public void setIssueNumber(long issueNumber);
+
+	/**
 	 * Returns the title of this issue.
 	 *
 	 * @return the title of this issue

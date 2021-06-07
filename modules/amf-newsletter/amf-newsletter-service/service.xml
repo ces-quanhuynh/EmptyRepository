@@ -7,6 +7,7 @@
 	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
 	<entity name="Issue" local-service="true" remote-service="true" uuid="true">
 		<column name="issueId" type="long" primary="true"/>
+		<column name="issueNumber" type="long"/>
 		<column name="title" type="String"/>
 		<column name="description" type="String"/>
 		<column name="issueDate" type="Date"/>
@@ -17,7 +18,7 @@
 
 	<entity name="IssueArticle" local-service="true" remote-service="true" uuid="true">
 		<column name="issueArticleId" type="long" primary="true"/>
-		<column name="issueId" type="long"/>
+		<column name="issueNumber" type="long"/>
 		<column name="title" type="String"/>
 		<column name="author" type="String"/>
 		<column name="order" type="long"/>

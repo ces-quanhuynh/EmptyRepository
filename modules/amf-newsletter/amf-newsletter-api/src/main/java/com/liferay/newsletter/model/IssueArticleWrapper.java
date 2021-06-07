@@ -43,7 +43,7 @@ public class IssueArticleWrapper
 
 		attributes.put("uuid", getUuid());
 		attributes.put("issueArticleId", getIssueArticleId());
-		attributes.put("issueId", getIssueId());
+		attributes.put("issueNumber", getIssueNumber());
 		attributes.put("title", getTitle());
 		attributes.put("author", getAuthor());
 		attributes.put("order", getOrder());
@@ -66,10 +66,10 @@ public class IssueArticleWrapper
 			setIssueArticleId(issueArticleId);
 		}
 
-		Long issueId = (Long)attributes.get("issueId");
+		Long issueNumber = (Long)attributes.get("issueNumber");
 
-		if (issueId != null) {
-			setIssueId(issueId);
+		if (issueNumber != null) {
+			setIssueNumber(issueNumber);
 		}
 
 		String title = (String)attributes.get("title");
@@ -128,13 +128,13 @@ public class IssueArticleWrapper
 	}
 
 	/**
-	 * Returns the issue ID of this issue article.
+	 * Returns the issue number of this issue article.
 	 *
-	 * @return the issue ID of this issue article
+	 * @return the issue number of this issue article
 	 */
 	@Override
-	public long getIssueId() {
-		return model.getIssueId();
+	public long getIssueNumber() {
+		return model.getIssueNumber();
 	}
 
 	/**
@@ -213,13 +213,13 @@ public class IssueArticleWrapper
 	}
 
 	/**
-	 * Sets the issue ID of this issue article.
+	 * Sets the issue number of this issue article.
 	 *
-	 * @param issueId the issue ID of this issue article
+	 * @param issueNumber the issue number of this issue article
 	 */
 	@Override
-	public void setIssueId(long issueId) {
-		model.setIssueId(issueId);
+	public void setIssueNumber(long issueNumber) {
+		model.setIssueNumber(issueNumber);
 	}
 
 	/**

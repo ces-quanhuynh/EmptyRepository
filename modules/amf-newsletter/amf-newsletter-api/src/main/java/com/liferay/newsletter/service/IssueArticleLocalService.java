@@ -14,6 +14,7 @@
 
 package com.liferay.newsletter.service;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.newsletter.model.IssueArticle;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
+
+import java.text.ParseException;
 
 import java.util.List;
 
@@ -191,6 +194,10 @@ public interface IssueArticleLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<IssueArticle> getAllIssueArticles(long groupId)
+		throws ParseException, PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -203,6 +210,10 @@ public interface IssueArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IssueArticle getIssueArticle(long issueArticleId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IssueArticle getIssueArticle(long groupId, String articleId)
+		throws ParseException, PortalException;
 
 	/**
 	 * Returns a range of all the issue articles.
@@ -240,6 +251,9 @@ public interface IssueArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public int haveIssueArticle(
+		JournalArticle journalArticle, List<JournalArticle> journalArticles);
 
 	/**
 	 * Updates the issue article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
