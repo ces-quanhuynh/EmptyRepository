@@ -7,15 +7,15 @@ import com.liferay.newsletter.model.IssueArticle;
 import com.liferay.newsletter.portlet.util.IssueUtil;
 import com.liferay.newsletter.service.IssueArticleLocalService;
 import com.liferay.newsletter.service.IssueLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,19 +33,22 @@ public class ViewMainMVCRenderCommand implements MVCRenderCommand {
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
         try {
-            List<Issue> issues = _issueLocalService.getAllIssues(20124);
-            List<IssueArticle> issueArticles = _issueArticleLocalService.getAllIssueArticles(20124);
+            ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+            long groupId = themeDisplay.getLayout().getGroupId();
+
+            List<Issue> issues = _issueLocalService.getAllIssues(groupId);
+            List<IssueArticle> issueArticles = _issueArticleLocalService.getAllIssueArticles(groupId);
             List<String> years = IssueUtil.yearsOfIssue(issues);
             renderRequest.setAttribute("years",years);
 
             String date = (String) renderRequest.getParameter("date");
             if(date != null){
 
-                Map<Issue, ArrayList<IssueArticle>> map = IssueUtil.getAllIssueWithArticleByDate(issues,issueArticles,date);
+                Map<Issue, ArrayList<IssueArticle>> issueWithArticle = IssueUtil.getAllIssueWithArticleByDate(issues,issueArticles,date);
 
-                renderRequest.setAttribute("article",map);
+                renderRequest.setAttribute("issueWithArticle",issueWithArticle);
             } else {
-                renderRequest.setAttribute("article",null);
+                renderRequest.setAttribute("issueWithArticle",null);
             }
 
         } catch (Exception e) {

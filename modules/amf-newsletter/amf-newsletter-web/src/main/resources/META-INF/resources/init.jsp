@@ -12,6 +12,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.newsletter.model.IssueArticle" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.liferay.newsletter.constants.MVCCommandNames" %>
 
 <liferay-theme:defineObjects />
 

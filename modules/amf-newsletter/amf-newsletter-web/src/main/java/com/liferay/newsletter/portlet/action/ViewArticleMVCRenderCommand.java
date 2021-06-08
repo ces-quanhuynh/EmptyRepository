@@ -8,7 +8,9 @@ import com.liferay.newsletter.portlet.util.IssueUtil;
 import com.liferay.newsletter.service.IssueArticleLocalService;
 import com.liferay.newsletter.service.IssueLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -23,7 +25,7 @@ import java.util.Map;
         immediate = true,
         property ={
                 "javax.portlet.name=" + AMFNewsletterPortletKeys.AMFNEWSLETTER,
-                "mvc.command.name=" + MVCCommandNames.VIEW_ARTICLE,
+                "mvc.command.name=" + MVCCommandNames.VIEW_ISSUE,
         },
         service = MVCRenderCommand.class
 )
@@ -31,11 +33,16 @@ public class ViewArticleMVCRenderCommand implements MVCRenderCommand {
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
         try {
-            List<Issue> issues = _issueLocalService.getAllIssues(20124);
-            List<IssueArticle> issueArticles = _issueArticleLocalService.getAllIssueArticles(20124);
-            long num = ParamUtil.getLong(renderRequest,"issueNumber");
-            Map<Issue, ArrayList<IssueArticle>> map = IssueUtil.getIssueWithArticleByIssueNumber(issues,issueArticles,num);
-            renderRequest.setAttribute("article",map);
+            ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+            long groupId = themeDisplay.getLayout().getGroupId();
+
+            List<Issue> issues = _issueLocalService.getAllIssues(groupId);
+            List<IssueArticle> issueArticles = _issueArticleLocalService.getAllIssueArticles(groupId);
+
+            long issueNumber = ParamUtil.getLong(renderRequest,"issueNumber");
+            Map<Issue, ArrayList<IssueArticle>> issueWithArticleByIssueNumber = IssueUtil.getIssueWithArticleByIssueNumber(issues,issueArticles,issueNumber);
+
+            renderRequest.setAttribute("issueWithArticleByIssueNumber",issueWithArticleByIssueNumber);
         } catch (Exception e){
             throw new PortletException(e);
         }

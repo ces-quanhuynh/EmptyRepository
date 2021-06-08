@@ -2,10 +2,6 @@ package com.liferay.newsletter.portlet.util;
 
 import com.liferay.newsletter.model.Issue;
 import com.liferay.newsletter.model.IssueArticle;
-import com.liferay.newsletter.service.IssueArticleLocalService;
-import com.liferay.newsletter.service.IssueLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import org.osgi.service.component.annotations.Reference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,8 +13,6 @@ public class IssueUtil {
     public static Map<Issue,ArrayList<IssueArticle>> getAllIssueWithArticle(List<Issue> issues, List<IssueArticle> issueArticles){
 
         Map<Issue, ArrayList<IssueArticle>> issueWithArticles = new HashMap<>();
-
-//        issues = issues.stream().sorted(Comparator.comparing(Issue::getIssueDate)).collect(Collectors.toList());
 
         for(int i = 0; i<issues.size(); i++){
             int finalI = i;
