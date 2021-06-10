@@ -14,8 +14,12 @@
 
 package com.liferay.newsletter.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.util.JournalConverter;
+import com.liferay.newsletter.content.ContentNames;
 import com.liferay.newsletter.model.Issue;
 import com.liferay.newsletter.service.base.IssueLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -59,29 +63,17 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 	public Issue getIssue(long groupId, String articleId) throws PortalException, ParseException {
 
 		JournalArticle journalArticle = _journalArticleLocalService.getArticle(groupId, articleId);
-		List<String> dataFromContent = new ArrayList<>();
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+		Fields fields = _journalConverter.getDDMFields(ddmStructure,journalArticle.getContent());
 
 		long issueId = counterLocalService.increment();
-
 		Issue issue = issuePersistence.create(issueId);
-		String xml = journalArticle.getContent();
 
-		for(int i=0;i<4;i++){
-			String data = xml.substring(xml.indexOf("[CDATA")+7,xml.indexOf("]]></dynamic-content>"));
-			dataFromContent.add(data);
-			xml = xml.substring(xml.indexOf("]]></dynamic-content>")+21);
-		}
-
-		issue.setIssueNumber(Long.parseLong(dataFromContent.get(0)));
-
-		issue.setTitle(dataFromContent.get(1));
-
-		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dataFromContent.get(2));
+		issue.setIssueNumber(Long.valueOf((String)fields.get("IssueNumber").getValue()));
+		issue.setTitle((String)fields.get("Tittle").getValue());
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse((String)fields.get("IssueDate").getValue());
 		issue.setIssueDate(date);
-
-		issue.setDescription(dataFromContent.get(3));
-
-		issuePersistence.updateImpl(issue);
+		issue.setDescription((String)fields.get("Description").getValue());
 
 		return issue;
 	}
@@ -99,7 +91,9 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 			journalArticleNewVersion.add(journalArticles.get(j));
 		}
 
-		journalArticleNewVersion = journalArticleNewVersion.stream().filter(journalArticle -> journalArticle.getDDMStructureKey().equals("35679")).collect(Collectors.toList());
+		journalArticleNewVersion = journalArticleNewVersion.stream()
+				.filter(journalArticle -> journalArticle.getDDMStructure().getNameCurrentValue().equals(ContentNames.ISSUE))
+				.collect(Collectors.toList());
 
 		for(int i = 0; i < journalArticleNewVersion.size(); i++){
 			issues.add(getIssue(groupId,journalArticleNewVersion.get(i).getArticleId()));
@@ -119,4 +113,7 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 
 	@Reference
 	public JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	public JournalConverter _journalConverter;
 }

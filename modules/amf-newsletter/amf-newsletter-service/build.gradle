@@ -11,6 +11,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 	compileOnly group: "com.liferay", name: "com.liferay.journal.service"
 	compileOnly group: "com.liferay", name: "com.liferay.journal.api"
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api"
 }
 
 buildService {

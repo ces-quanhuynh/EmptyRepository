@@ -31,15 +31,16 @@ public class IssueUtil {
 
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
 
-        issuesByDate = issues.stream().filter(issue -> issue.getIssueDate().getMonth()==date.getMonth()&&
-                issue.getIssueDate().getYear()==date.getYear())
+        issuesByDate = issues.stream()
+                .filter(issue -> issue.getIssueDate().getMonth()==date.getMonth()&& issue.getIssueDate().getYear()==date.getYear())
                 .sorted(Comparator.comparing(Issue::getIssueDate))
                 .collect(Collectors.toList());
 
         for(int i = 0; i<issuesByDate.size(); i++){
             int finalI = i;
-            ArrayList<IssueArticle> temp = (ArrayList<IssueArticle>) issueArticles.stream().
-                    filter(issueArticle -> issueArticle.getIssueNumber()== issuesByDate.get(finalI).getIssueNumber()).collect(Collectors.toList());
+            ArrayList<IssueArticle> temp = (ArrayList<IssueArticle>) issueArticles.stream()
+                    .filter(issueArticle -> issueArticle.getIssueNumber()== issuesByDate
+                    .get(finalI).getIssueNumber()).collect(Collectors.toList());
 
             issueWithArticlesByDate.put(issuesByDate.get(finalI),temp);
         }

@@ -52,11 +52,11 @@
                     <h3>#${issue.issueNumber},${issue.issueDate}</h3>
 
 <%--                    friendly-url--%>
-                    <portlet:renderURL var="viewArticle">
+                    <portlet:renderURL var="viewIssue">
                         <portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.VIEW_ISSUE%>" />
                         <portlet:param name="issueNumber" value="${issue.issueNumber}" />
                     </portlet:renderURL>
-                    <h1><a href="${viewArticle}">${issue.title}</a></h1>
+                    <h1><a href="${viewIssue}">${issue.title}</a></h1>
 
                     <c:forEach items="<%=issueWithArticle.get((Issue) pageContext.getAttribute("issue"))%>" var="article">
                         <p>${article.title}</p>

@@ -13,8 +13,12 @@
  */
 
 package com.liferay.newsletter.service.impl;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.util.JournalConverter;
+import com.liferay.newsletter.content.ContentNames;
 import com.liferay.newsletter.model.Issue;
 import com.liferay.newsletter.model.IssueArticle;
 import com.liferay.newsletter.service.base.IssueArticleLocalServiceBaseImpl;
@@ -24,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,51 +63,40 @@ public class IssueArticleLocalServiceImpl extends IssueArticleLocalServiceBaseIm
 	public IssueArticle getIssueArticle(long groupId, String articleId) throws PortalException, ParseException {
 
 		JournalArticle journalArticle = _journalArticleLocalService.getArticle(groupId, articleId);
-		List<String> dataFromContent = new ArrayList<>();
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+		Fields fields = _journalConverter.getDDMFields(ddmStructure,journalArticle.getContent());
 
 		long issueArticleId = counterLocalService.increment();
-
 		IssueArticle issueArticle = issueArticlePersistence.create(issueArticleId);
-		String xml = journalArticle.getContent();
 
-		for(int i=0;i<5;i++){
-			String data = xml.substring(xml.indexOf("[CDATA")+7,xml.indexOf("]]></dynamic-content>"));
-			dataFromContent.add(data);
-			xml = xml.substring(xml.indexOf("]]></dynamic-content>")+21);
-		}
-
-		issueArticle.setIssueNumber(Long.parseLong(dataFromContent.get(0)));
-
-		issueArticle.setTitle(dataFromContent.get(1));
-
-		issueArticle.setAuthor(dataFromContent.get(2));
-
-		issueArticle.setOrder(Long.parseLong(dataFromContent.get(3)));
-
-		issueArticle.setContent(dataFromContent.get(4));
-
-		issueArticlePersistence.updateImpl(issueArticle);
+		issueArticle.setIssueNumber(Long.valueOf((String) fields.get("IssueNumberBelongTo").getValue()));
+		issueArticle.setTitle((String)fields.get("Tittle").getValue());
+		issueArticle.setAuthor((String)fields.get("Author").getValue());
+		issueArticle.setOrder(Long.valueOf((String) fields.get("Order").getValue()));
+		issueArticle.setContent((String)fields.get("Content").getValue());
 
 		return issueArticle;
 	}
 
 	public List<IssueArticle> getAllIssueArticles(long groupId) throws PortalException, ParseException {
 		List<JournalArticle> journalArticles = _journalArticleLocalService.getArticles(groupId);
-		List<JournalArticle> journalArticleNewVersion = new ArrayList<>();
+		List<JournalArticle> journalArticleNewVersions = new ArrayList<>();
 		List<IssueArticle> issueArticles = new ArrayList<>();
 
-		for(int j = 0;j<journalArticles.size();j++){
-			int check = haveIssueArticle(journalArticles.get(j),journalArticleNewVersion);
+		for(int j = 0; j<journalArticles.size(); j++){
+			int check = haveIssueArticle(journalArticles.get(j),journalArticleNewVersions);
 			if (check != -1) {
-				journalArticleNewVersion.remove(check);
+				journalArticleNewVersions.remove(check);
 			}
-			journalArticleNewVersion.add(journalArticles.get(j));
+			journalArticleNewVersions.add(journalArticles.get(j));
 		}
 
-		journalArticleNewVersion = journalArticleNewVersion.stream().filter(journalArticle -> journalArticle.getDDMStructureKey().equals("35684")).collect(Collectors.toList());
+		journalArticleNewVersions = journalArticleNewVersions.stream().
+				filter(journalArticle -> journalArticle.getDDMStructure().getNameCurrentValue().equals(ContentNames.ISSUE_ARTICLE)).
+				collect(Collectors.toList());
 
-		for(int i = 0; i < journalArticleNewVersion.size(); i++){
-			issueArticles.add(getIssueArticle(groupId,journalArticleNewVersion.get(i).getArticleId()));
+		for(int i = 0; i < journalArticleNewVersions.size(); i++){
+			issueArticles.add(getIssueArticle(groupId,journalArticleNewVersions.get(i).getArticleId()));
 		}
 
 		return issueArticles;
@@ -119,4 +113,7 @@ public class IssueArticleLocalServiceImpl extends IssueArticleLocalServiceBaseIm
 
 	@Reference
 	public JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	public JournalConverter _journalConverter;
 }
