@@ -5,8 +5,13 @@ import com.liferay.newsletter.constants.AMFNewsletterPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+
+import java.io.IOException;
 
 /**
  * @author ces-user

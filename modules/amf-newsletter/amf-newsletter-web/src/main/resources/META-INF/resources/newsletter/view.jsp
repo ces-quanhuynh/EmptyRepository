@@ -1,4 +1,7 @@
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ include file="../init.jsp" %>
+
+<%@ include file="search.jsp"%>
 
 <%
     List<String> years = (List<String>)renderRequest.getAttribute("years");
@@ -6,6 +9,7 @@
 
     List<String> monthNames =
             new ArrayList<String>(Arrays.asList("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV","DEC"));
+    renderRequest.setAttribute("monthNames",monthNames);
 
     for(int i = 0; i <monthNames.size();i++){
         months.put(monthNames.get(i),String.valueOf(i+1));
@@ -18,12 +22,17 @@
         List<Issue> issues = new ArrayList<>(issueWithArticle.keySet());
         renderRequest.setAttribute("issues", issues);
     }
+
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("LLLL dd, yyyy", Locale.getDefault());
 %>
 
 <liferay-ui:tabs names="${years}" refresh="false" tabsValues="${years}">
     <c:forEach items="${years}" var="year">
         <liferay-ui:section>
-            <portlet:actionURL name="<%= MVCCommandNames.VIEW_MAIN %>" var="viewMain" />
+
+            <portlet:renderURL var="viewMain">
+                <portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.VIEW_MAIN%>"></portlet:param>
+            </portlet:renderURL>
             <aui:form action="${viewMain}" name="<portlet:namespace/>fm">
 
                 <aui:input name="yearss" type="hidden" value="${year}"/>
@@ -35,10 +44,11 @@
                 </aui:select>
 
                 <aui:button-row>
-                    <aui:button type="submit" value="Search"/>
+                    <aui:button type="submit" value="Find"/>
                 </aui:button-row>
 
             </aui:form>
+
         </liferay-ui:section>
     </c:forEach>
 </liferay-ui:tabs>
@@ -49,7 +59,14 @@
 
             <c:when test="<%=issueWithArticle.size()>0%>">
                 <c:forEach items="${issues}" var="issue">
-                    <h3>#${issue.issueNumber},${issue.issueDate}</h3>
+
+                    <%
+                        Issue issue = (Issue) pageContext.getAttribute("issue");
+                        String dateFormat = simpleDateFormat.format(issue.getIssueDate());
+                        renderRequest.setAttribute("dateFormat",dateFormat);
+                    %>
+
+                    <h3>Issue: #${issue.issueNumber} <%=renderRequest.getAttribute("dateFormat")%></h3>
 
 <%--                    friendly-url--%>
                     <portlet:renderURL var="viewIssue">
@@ -70,4 +87,6 @@
         </c:choose>
     </c:when>
 </c:choose>
+
+
 

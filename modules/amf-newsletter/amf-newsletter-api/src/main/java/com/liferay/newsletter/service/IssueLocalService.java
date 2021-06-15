@@ -213,6 +213,11 @@ public interface IssueLocalService
 	public Issue getIssue(long groupId, String articleId)
 		throws ParseException, PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticle getIssueByIssueArticle(
+			long groupId, JournalArticle journalArticle)
+		throws ParseException, PortalException;
+
 	/**
 	 * Returns a range of all the issues.
 	 *
@@ -226,6 +231,11 @@ public interface IssueLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Issue> getIssues(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Issue> getIssuesBySearch(
+			long groupId, List<JournalArticle> journalArticles)
+		throws ParseException, PortalException;
 
 	/**
 	 * Returns the number of issues.

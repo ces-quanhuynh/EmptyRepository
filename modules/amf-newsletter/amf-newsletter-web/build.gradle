@@ -18,5 +18,16 @@ dependencies {
 	compile project(":modules:amf-newsletter:amf-newsletter-api")
 	compile project(":modules:amf-newsletter:amf-newsletter-service")
 
+	compileOnly group: "com.liferay", name: "com.liferay.journal.service"
+	compileOnly group: "com.liferay", name: "com.liferay.journal.api"
+
+	compileOnly group: "com.liferay", name: "com.liferay.portal.search.spi"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.search.api"
+
+	compileOnly group: 'com.liferay', name: 'com.liferay.frontend.taglib.clay'
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.soy"
+
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.2"
+
+	compileOnly group: 'com.liferay', name: 'com.liferay.petra.function'
 }

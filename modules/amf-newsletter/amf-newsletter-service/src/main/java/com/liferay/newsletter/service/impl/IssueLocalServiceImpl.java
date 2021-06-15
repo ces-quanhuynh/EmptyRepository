@@ -21,6 +21,8 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.newsletter.content.ContentNames;
 import com.liferay.newsletter.model.Issue;
+import com.liferay.newsletter.model.IssueArticle;
+import com.liferay.newsletter.service.IssueArticleLocalService;
 import com.liferay.newsletter.service.base.IssueLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -83,22 +85,47 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		List<JournalArticle> journalArticleNewVersion = new ArrayList<>();
 		List<Issue> issues = new ArrayList<>();
 
-		for(int j = 0;j<journalArticles.size();j++){
-			int check = haveIssue(journalArticles.get(j),journalArticleNewVersion);
+		for (JournalArticle article : journalArticles) {
+			int check = haveIssue(article, journalArticleNewVersion);
 			if (check != -1) {
 				journalArticleNewVersion.remove(check);
 			}
-			journalArticleNewVersion.add(journalArticles.get(j));
+			journalArticleNewVersion.add(article);
 		}
 
 		journalArticleNewVersion = journalArticleNewVersion.stream()
 				.filter(journalArticle -> journalArticle.getDDMStructure().getNameCurrentValue().equals(ContentNames.ISSUE))
 				.collect(Collectors.toList());
 
-		for(int i = 0; i < journalArticleNewVersion.size(); i++){
-			issues.add(getIssue(groupId,journalArticleNewVersion.get(i).getArticleId()));
+		for (JournalArticle journalArticle : journalArticleNewVersion) {
+			issues.add(getIssue(groupId, journalArticle.getArticleId()));
 		}
 
+		return issues;
+	}
+
+	public List<Issue> getIssuesBySearch(long groupId, List<JournalArticle> journalArticles) throws PortalException, ParseException {
+		List<Issue> issues = new ArrayList<>();
+		List<JournalArticle> journalArticleIssue = new ArrayList<>();
+
+		for(int i = 0; i<journalArticles.size(); i++){
+			if(journalArticles.get(i).getDDMStructure().getNameCurrentValue().equals(ContentNames.ISSUE) && haveIssue(journalArticles.get(i),journalArticleIssue)==-1){
+
+				journalArticleIssue.add(journalArticles.get(i));
+
+			} else if(journalArticles.get(i).getDDMStructure().getNameCurrentValue().equals(ContentNames.ISSUE_ARTICLE)){
+
+				JournalArticle journalArticleCheck = getIssueByIssueArticle(groupId,journalArticles.get(i));
+
+				if(journalArticleCheck!=null&&haveIssue(journalArticleCheck,journalArticleIssue)==-1){
+					journalArticleIssue.add(journalArticleCheck);
+				}
+			}
+		}
+
+		for (JournalArticle journalArticle : journalArticleIssue) {
+			issues.add(getIssue(groupId, journalArticle.getArticleId()));
+		}
 		return issues;
 	}
 
@@ -111,9 +138,31 @@ public class IssueLocalServiceImpl extends IssueLocalServiceBaseImpl {
 		return -1;
 	}
 
+	public JournalArticle getIssueByIssueArticle (long groupId, JournalArticle journalArticle) throws ParseException, PortalException {
+
+		IssueArticle issueArticle = _issueArticleLocalService.getIssueArticle(groupId,journalArticle.getArticleId());
+
+		List<JournalArticle> journalArticles = _journalArticleLocalService.getArticles(groupId);
+		for(int i = 0; i<journalArticles.size(); i++){
+
+			if(journalArticles.get(i).getDDMStructure().getNameCurrentValue().equals(ContentNames.ISSUE)){
+
+				Issue issue = getIssue(groupId,journalArticles.get(i).getArticleId());
+
+				if(issue.getIssueNumber()==issueArticle.getIssueNumber()){
+					return journalArticles.get(i);
+				}
+			}
+		}
+		return null;
+	}
+
 	@Reference
 	public JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	public JournalConverter _journalConverter;
+
+	@Reference
+	public IssueArticleLocalService _issueArticleLocalService;
 }

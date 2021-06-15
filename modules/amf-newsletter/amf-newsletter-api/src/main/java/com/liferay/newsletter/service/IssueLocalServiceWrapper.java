@@ -244,6 +244,17 @@ public class IssueLocalServiceWrapper
 		return _issueLocalService.getIssue(groupId, articleId);
 	}
 
+	@Override
+	public com.liferay.journal.model.JournalArticle getIssueByIssueArticle(
+			long groupId,
+			com.liferay.journal.model.JournalArticle journalArticle)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.text.ParseException {
+
+		return _issueLocalService.getIssueByIssueArticle(
+			groupId, journalArticle);
+	}
+
 	/**
 	 * Returns a range of all the issues.
 	 *
@@ -260,6 +271,17 @@ public class IssueLocalServiceWrapper
 		int start, int end) {
 
 		return _issueLocalService.getIssues(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.newsletter.model.Issue> getIssuesBySearch(
+			long groupId,
+			java.util.List<com.liferay.journal.model.JournalArticle>
+				journalArticles)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.text.ParseException {
+
+		return _issueLocalService.getIssuesBySearch(groupId, journalArticles);
 	}
 
 	/**

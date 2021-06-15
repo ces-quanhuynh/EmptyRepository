@@ -8,6 +8,7 @@ import com.liferay.newsletter.portlet.util.IssueUtil;
 import com.liferay.newsletter.service.IssueArticleLocalService;
 import com.liferay.newsletter.service.IssueLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,6 +44,12 @@ public class ViewArticleMVCRenderCommand implements MVCRenderCommand {
             Map<Issue, ArrayList<IssueArticle>> issueWithArticleByIssueNumber = IssueUtil.getIssueWithArticleByIssueNumber(issues,issueArticles,issueNumber);
 
             renderRequest.setAttribute("issueWithArticleByIssueNumber",issueWithArticleByIssueNumber);
+
+            PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+            String redirect = renderRequest.getParameter("redirect");
+            portletDisplay.setShowBackIcon(true);
+            portletDisplay.setURLBack(redirect);
+
         } catch (Exception e){
             throw new PortletException(e);
         }

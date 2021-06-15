@@ -8,7 +8,9 @@ import com.liferay.newsletter.portlet.util.IssueUtil;
 import com.liferay.newsletter.service.IssueArticleLocalService;
 import com.liferay.newsletter.service.IssueLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,7 +43,14 @@ public class ViewMainMVCRenderCommand implements MVCRenderCommand {
             List<String> years = IssueUtil.yearsOfIssue(issues);
             renderRequest.setAttribute("years",years);
 
-            String date = (String) renderRequest.getParameter("date");
+            String year = ParamUtil.getString(renderRequest,"yearss");
+            String month = ParamUtil.getString(renderRequest,"months");
+            String date = year+"-"+month+"-1";
+
+            if(year.equals("")){
+                return "/newsletter/view.jsp";
+            }
+
             if(date != null){
 
                 Map<Issue, ArrayList<IssueArticle>> issueWithArticle = IssueUtil.getAllIssueWithArticleByDate(issues,issueArticles,date);
