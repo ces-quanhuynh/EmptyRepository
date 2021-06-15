@@ -25,6 +25,27 @@ public class IssueUtil {
         return issueWithArticles;
     }
 
+    public static List<Issue> getIssueSearchPagination(List<Issue> issues, int start, int end){
+
+        List<Issue> issueSearch = new ArrayList<>();
+        int listSize = issues.size();
+
+        if(start >= listSize){
+            for(int i = 0; i < listSize; i++){
+                issueSearch.add(issues.get(i));
+            }
+        } else if(end >= listSize){
+            for(int i = start; i < listSize; i++){
+                issueSearch.add(issues.get(i));
+            }
+        } else {
+            for(int i = start; i < end; i++){
+                issueSearch.add(issues.get(i));
+            }
+        }
+        return issueSearch;
+    }
+
     public static Map<Issue,ArrayList<IssueArticle>> getAllIssueWithArticleByDate(List<Issue> issues, List<IssueArticle> issueArticles,String dateString) throws ParseException {
         Map<Issue, ArrayList<IssueArticle>> issueWithArticlesByDate = new HashMap<>();
         List<Issue> issuesByDate;
@@ -39,8 +60,8 @@ public class IssueUtil {
         for(int i = 0; i<issuesByDate.size(); i++){
             int finalI = i;
             ArrayList<IssueArticle> temp = (ArrayList<IssueArticle>) issueArticles.stream()
-                    .filter(issueArticle -> issueArticle.getIssueNumber()== issuesByDate
-                    .get(finalI).getIssueNumber()).collect(Collectors.toList());
+                    .filter(issueArticle -> issueArticle.getIssueNumber()== issuesByDate.get(finalI).getIssueNumber())
+                    .collect(Collectors.toList());
 
             issueWithArticlesByDate.put(issuesByDate.get(finalI),temp);
         }
@@ -53,8 +74,9 @@ public class IssueUtil {
         if(issueByNumber==null){
             return null;
         } else {
-            ArrayList<IssueArticle> temp = (ArrayList<IssueArticle>) issueArticles.stream().
-                    filter(issueArticle -> issueArticle.getIssueNumber()== issueByNumber.getIssueNumber()).collect(Collectors.toList());
+            ArrayList<IssueArticle> temp = (ArrayList<IssueArticle>) issueArticles.stream()
+                    .filter(issueArticle -> issueArticle.getIssueNumber() == issueByNumber.getIssueNumber())
+                    .collect(Collectors.toList());
 
             issueWithArticles.put(issueByNumber, temp);
             return issueWithArticles;

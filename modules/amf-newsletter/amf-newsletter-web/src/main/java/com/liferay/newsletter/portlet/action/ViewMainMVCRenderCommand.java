@@ -57,6 +57,8 @@ public class ViewMainMVCRenderCommand implements MVCRenderCommand {
         return "/newsletter/view.jsp";
     }
 
+
+
     @Reference
     IssueLocalService _issueLocalService;
 

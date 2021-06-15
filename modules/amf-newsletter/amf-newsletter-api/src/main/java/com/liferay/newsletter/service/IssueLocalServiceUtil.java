@@ -239,6 +239,16 @@ public class IssueLocalServiceUtil {
 		return getService().getIssue(groupId, articleId);
 	}
 
+	public static com.liferay.journal.model.JournalArticle
+			getIssueByIssueArticle(
+				long groupId,
+				com.liferay.journal.model.JournalArticle journalArticle)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.text.ParseException {
+
+		return getService().getIssueByIssueArticle(groupId, journalArticle);
+	}
+
 	/**
 	 * Returns a range of all the issues.
 	 *
@@ -254,6 +264,17 @@ public class IssueLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getIssues(start, end);
+	}
+
+	public static java.util.List<com.liferay.newsletter.model.Issue>
+			getIssuesBySearch(
+				long groupId,
+				java.util.List<com.liferay.journal.model.JournalArticle>
+					journalArticles)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   java.text.ParseException {
+
+		return getService().getIssuesBySearch(groupId, journalArticles);
 	}
 
 	/**

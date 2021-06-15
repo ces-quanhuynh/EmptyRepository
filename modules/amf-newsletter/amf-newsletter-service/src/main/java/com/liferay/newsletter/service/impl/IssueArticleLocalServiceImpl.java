@@ -83,20 +83,20 @@ public class IssueArticleLocalServiceImpl extends IssueArticleLocalServiceBaseIm
 		List<JournalArticle> journalArticleNewVersions = new ArrayList<>();
 		List<IssueArticle> issueArticles = new ArrayList<>();
 
-		for(int j = 0; j<journalArticles.size(); j++){
-			int check = haveIssueArticle(journalArticles.get(j),journalArticleNewVersions);
+		for (JournalArticle article : journalArticles) {
+			int check = haveIssueArticle(article, journalArticleNewVersions);
 			if (check != -1) {
 				journalArticleNewVersions.remove(check);
 			}
-			journalArticleNewVersions.add(journalArticles.get(j));
+			journalArticleNewVersions.add(article);
 		}
 
 		journalArticleNewVersions = journalArticleNewVersions.stream().
 				filter(journalArticle -> journalArticle.getDDMStructure().getNameCurrentValue().equals(ContentNames.ISSUE_ARTICLE)).
 				collect(Collectors.toList());
 
-		for(int i = 0; i < journalArticleNewVersions.size(); i++){
-			issueArticles.add(getIssueArticle(groupId,journalArticleNewVersions.get(i).getArticleId()));
+		for (JournalArticle journalArticleNewVersion : journalArticleNewVersions) {
+			issueArticles.add(getIssueArticle(groupId, journalArticleNewVersion.getArticleId()));
 		}
 
 		return issueArticles;

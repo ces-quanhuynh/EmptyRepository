@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=AMFNewsletter",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/newsletter/view.jsp",
+		"javax.portlet.init-param.view-template=/newsletter/search.jsp",
 		"javax.portlet.name=" + AMFNewsletterPortletKeys.AMFNEWSLETTER,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
