@@ -12,6 +12,8 @@
     renderRequest.setAttribute("dateFormat",dateFormat);
 %>
 
+
+
 <h3>#<%=issue.get(0).getIssueNumber() %>,<%=renderRequest.getAttribute("dateFormat")%></h3>
 
 <h1><%=issue.get(0).getTitle()%></h1>

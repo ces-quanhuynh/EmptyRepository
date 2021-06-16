@@ -30,6 +30,7 @@
                 <portlet:renderURL var="viewIssue">
                     <portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.VIEW_ISSUE%>" />
                     <portlet:param name="issueNumber" value="${entry.issueNumber}" />
+                    <portlet:param name="redirect" value="<%=themeDisplay.getURLCurrent()%>"/>
                 </portlet:renderURL>
 
                 <liferay-ui:search-container-column-text name="Title" value="${entry.title}" href="${viewIssue}"/>

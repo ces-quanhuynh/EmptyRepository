@@ -46,7 +46,7 @@ public class ViewArticleMVCRenderCommand implements MVCRenderCommand {
             renderRequest.setAttribute("issueWithArticleByIssueNumber",issueWithArticleByIssueNumber);
 
             PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-            String redirect = renderRequest.getParameter("redirect");
+            String redirect =ParamUtil.getString(renderRequest,"redirect");
             portletDisplay.setShowBackIcon(true);
             portletDisplay.setURLBack(redirect);
 

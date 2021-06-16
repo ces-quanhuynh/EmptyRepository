@@ -72,6 +72,7 @@
                     <portlet:renderURL var="viewIssue">
                         <portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.VIEW_ISSUE%>" />
                         <portlet:param name="issueNumber" value="${issue.issueNumber}" />
+                        <portlet:param name="redirect" value="<%=themeDisplay.getURLCurrent()%>"/>
                     </portlet:renderURL>
                     <h1><a href="${viewIssue}">${issue.title}</a></h1>
 
