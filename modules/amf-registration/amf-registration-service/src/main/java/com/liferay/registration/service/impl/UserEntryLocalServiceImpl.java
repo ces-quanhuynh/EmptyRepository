@@ -16,8 +16,7 @@ package com.liferay.registration.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.*;
 import com.liferay.portal.kernel.service.*;
 import com.liferay.registration.model.UserEntry;
 import com.liferay.registration.service.base.UserEntryLocalServiceBaseImpl;
@@ -87,6 +86,13 @@ public class UserEntryLocalServiceImpl extends UserEntryLocalServiceBaseImpl {
 		_phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(),user.getContactId(),homePhone,
 				null,TypeId.PERSONAL_PHONE_ID,true,serviceContext);
 
+		Country country = _countryService.fetchCountryByA2("US");
+
+		Region region = _regionService.fetchRegion(country.getCountryId(),state);
+		_addressLocalService.addAddress(user.getUserId(), Contact.class.getName(),user.getContactId(),address1,address2,
+				null,city,zipCode,region.getRegionId(),country.getCountryId(),TypeId.PERSONAL_ADDRESS_ID,true,
+				true,serviceContext);
+
 		userEntry.setUuid(serviceContext.getUuid());
 		userEntry.setAddress1(address1);
 		userEntry.setAddress1(address2);
@@ -105,6 +111,15 @@ public class UserEntryLocalServiceImpl extends UserEntryLocalServiceBaseImpl {
 
 	@Reference
 	private PhoneLocalService _phoneLocalService;
+
+	@Reference
+	private AddressLocalService _addressLocalService;
+
+	@Reference
+	private RegionService _regionService;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private BasicInfoValidator _basicInfoValidator;
