@@ -7,8 +7,6 @@
 	<entity name="UserEntry" local-service="true" uuid="true" remote-service="true">
 
 		<column name="userEntryId" type="long" primary="true"/>
-		<column name="homePhone" type="String"/>
-		<column name="mobilePhone" type="String"/>
 		<column name="address1" type="String"/>
 		<column name="address2" type="String"/>
 		<column name="city" type="String"/>
