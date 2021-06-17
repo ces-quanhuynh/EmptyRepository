@@ -100,36 +100,6 @@ public interface UserEntryModel extends BaseModel<UserEntry>, MVCCModel {
 	public void setUserEntryId(long userEntryId);
 
 	/**
-	 * Returns the home phone of this user entry.
-	 *
-	 * @return the home phone of this user entry
-	 */
-	@AutoEscape
-	public String getHomePhone();
-
-	/**
-	 * Sets the home phone of this user entry.
-	 *
-	 * @param homePhone the home phone of this user entry
-	 */
-	public void setHomePhone(String homePhone);
-
-	/**
-	 * Returns the mobile phone of this user entry.
-	 *
-	 * @return the mobile phone of this user entry
-	 */
-	@AutoEscape
-	public String getMobilePhone();
-
-	/**
-	 * Sets the mobile phone of this user entry.
-	 *
-	 * @param mobilePhone the mobile phone of this user entry
-	 */
-	public void setMobilePhone(String mobilePhone);
-
-	/**
 	 * Returns the address1 of this user entry.
 	 *
 	 * @return the address1 of this user entry

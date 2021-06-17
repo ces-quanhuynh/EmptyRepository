@@ -14,6 +14,7 @@
 
 package com.liferay.registration.service;
 
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -45,7 +46,7 @@ public class UserEntryLocalServiceWrapper
 			String homePhone, String mobilePhone, String address1,
 			String address2, String city, String state, String zipCode,
 			String securityQuestion, String securityAnswer,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userEntryLocalService.addUserEntry(

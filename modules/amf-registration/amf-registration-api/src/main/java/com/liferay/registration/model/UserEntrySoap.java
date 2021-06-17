@@ -33,8 +33,6 @@ public class UserEntrySoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setUserEntryId(model.getUserEntryId());
-		soapModel.setHomePhone(model.getHomePhone());
-		soapModel.setMobilePhone(model.getMobilePhone());
 		soapModel.setAddress1(model.getAddress1());
 		soapModel.setAddress2(model.getAddress2());
 		soapModel.setCity(model.getCity());
@@ -118,22 +116,6 @@ public class UserEntrySoap implements Serializable {
 		_userEntryId = userEntryId;
 	}
 
-	public String getHomePhone() {
-		return _homePhone;
-	}
-
-	public void setHomePhone(String homePhone) {
-		_homePhone = homePhone;
-	}
-
-	public String getMobilePhone() {
-		return _mobilePhone;
-	}
-
-	public void setMobilePhone(String mobilePhone) {
-		_mobilePhone = mobilePhone;
-	}
-
 	public String getAddress1() {
 		return _address1;
 	}
@@ -185,8 +167,6 @@ public class UserEntrySoap implements Serializable {
 	private long _mvccVersion;
 	private String _uuid;
 	private long _userEntryId;
-	private String _homePhone;
-	private String _mobilePhone;
 	private String _address1;
 	private String _address2;
 	private String _city;

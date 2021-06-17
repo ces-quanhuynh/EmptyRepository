@@ -74,7 +74,7 @@ public class UserEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -82,10 +82,6 @@ public class UserEntryCacheModel
 		sb.append(uuid);
 		sb.append(", userEntryId=");
 		sb.append(userEntryId);
-		sb.append(", homePhone=");
-		sb.append(homePhone);
-		sb.append(", mobilePhone=");
-		sb.append(mobilePhone);
 		sb.append(", address1=");
 		sb.append(address1);
 		sb.append(", address2=");
@@ -117,20 +113,6 @@ public class UserEntryCacheModel
 		}
 
 		userEntryImpl.setUserEntryId(userEntryId);
-
-		if (homePhone == null) {
-			userEntryImpl.setHomePhone("");
-		}
-		else {
-			userEntryImpl.setHomePhone(homePhone);
-		}
-
-		if (mobilePhone == null) {
-			userEntryImpl.setMobilePhone("");
-		}
-		else {
-			userEntryImpl.setMobilePhone(mobilePhone);
-		}
 
 		if (address1 == null) {
 			userEntryImpl.setAddress1("");
@@ -180,8 +162,6 @@ public class UserEntryCacheModel
 		uuid = objectInput.readUTF();
 
 		userEntryId = objectInput.readLong();
-		homePhone = objectInput.readUTF();
-		mobilePhone = objectInput.readUTF();
 		address1 = objectInput.readUTF();
 		address2 = objectInput.readUTF();
 		city = objectInput.readUTF();
@@ -203,20 +183,6 @@ public class UserEntryCacheModel
 		}
 
 		objectOutput.writeLong(userEntryId);
-
-		if (homePhone == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(homePhone);
-		}
-
-		if (mobilePhone == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(mobilePhone);
-		}
 
 		if (address1 == null) {
 			objectOutput.writeUTF("");
@@ -259,8 +225,6 @@ public class UserEntryCacheModel
 	public long mvccVersion;
 	public String uuid;
 	public long userEntryId;
-	public String homePhone;
-	public String mobilePhone;
 	public String address1;
 	public String address2;
 	public String city;

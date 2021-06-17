@@ -44,8 +44,6 @@ public class UserEntryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("userEntryId", getUserEntryId());
-		attributes.put("homePhone", getHomePhone());
-		attributes.put("mobilePhone", getMobilePhone());
 		attributes.put("address1", getAddress1());
 		attributes.put("address2", getAddress2());
 		attributes.put("city", getCity());
@@ -74,18 +72,6 @@ public class UserEntryWrapper
 
 		if (userEntryId != null) {
 			setUserEntryId(userEntryId);
-		}
-
-		String homePhone = (String)attributes.get("homePhone");
-
-		if (homePhone != null) {
-			setHomePhone(homePhone);
-		}
-
-		String mobilePhone = (String)attributes.get("mobilePhone");
-
-		if (mobilePhone != null) {
-			setMobilePhone(mobilePhone);
 		}
 
 		String address1 = (String)attributes.get("address1");
@@ -153,26 +139,6 @@ public class UserEntryWrapper
 	@Override
 	public String getCity() {
 		return model.getCity();
-	}
-
-	/**
-	 * Returns the home phone of this user entry.
-	 *
-	 * @return the home phone of this user entry
-	 */
-	@Override
-	public String getHomePhone() {
-		return model.getHomePhone();
-	}
-
-	/**
-	 * Returns the mobile phone of this user entry.
-	 *
-	 * @return the mobile phone of this user entry
-	 */
-	@Override
-	public String getMobilePhone() {
-		return model.getMobilePhone();
 	}
 
 	/**
@@ -288,26 +254,6 @@ public class UserEntryWrapper
 	@Override
 	public void setCity(String city) {
 		model.setCity(city);
-	}
-
-	/**
-	 * Sets the home phone of this user entry.
-	 *
-	 * @param homePhone the home phone of this user entry
-	 */
-	@Override
-	public void setHomePhone(String homePhone) {
-		model.setHomePhone(homePhone);
-	}
-
-	/**
-	 * Sets the mobile phone of this user entry.
-	 *
-	 * @param mobilePhone the mobile phone of this user entry
-	 */
-	@Override
-	public void setMobilePhone(String mobilePhone) {
-		model.setMobilePhone(mobilePhone);
 	}
 
 	/**

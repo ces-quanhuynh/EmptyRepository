@@ -72,8 +72,7 @@ public class UserEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"userEntryId", Types.BIGINT}, {"homePhone", Types.VARCHAR},
-		{"mobilePhone", Types.VARCHAR}, {"address1", Types.VARCHAR},
+		{"userEntryId", Types.BIGINT}, {"address1", Types.VARCHAR},
 		{"address2", Types.VARCHAR}, {"city", Types.VARCHAR},
 		{"state_", Types.VARCHAR}, {"zipCode", Types.VARCHAR},
 		{"userId", Types.BIGINT}
@@ -86,8 +85,6 @@ public class UserEntryModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("homePhone", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("mobilePhone", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("address1", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("address2", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("city", Types.VARCHAR);
@@ -97,7 +94,7 @@ public class UserEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table REGIS_UserEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userEntryId LONG not null primary key,homePhone VARCHAR(75) null,mobilePhone VARCHAR(75) null,address1 VARCHAR(75) null,address2 VARCHAR(75) null,city VARCHAR(75) null,state_ VARCHAR(75) null,zipCode VARCHAR(75) null,userId LONG)";
+		"create table REGIS_UserEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userEntryId LONG not null primary key,address1 VARCHAR(75) null,address2 VARCHAR(75) null,city VARCHAR(75) null,state_ VARCHAR(75) null,zipCode VARCHAR(75) null,userId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table REGIS_UserEntry";
 
@@ -141,8 +138,6 @@ public class UserEntryModelImpl
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setUserEntryId(soapModel.getUserEntryId());
-		model.setHomePhone(soapModel.getHomePhone());
-		model.setMobilePhone(soapModel.getMobilePhone());
 		model.setAddress1(soapModel.getAddress1());
 		model.setAddress2(soapModel.getAddress2());
 		model.setCity(soapModel.getCity());
@@ -310,14 +305,6 @@ public class UserEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"userEntryId",
 			(BiConsumer<UserEntry, Long>)UserEntry::setUserEntryId);
-		attributeGetterFunctions.put("homePhone", UserEntry::getHomePhone);
-		attributeSetterBiConsumers.put(
-			"homePhone",
-			(BiConsumer<UserEntry, String>)UserEntry::setHomePhone);
-		attributeGetterFunctions.put("mobilePhone", UserEntry::getMobilePhone);
-		attributeSetterBiConsumers.put(
-			"mobilePhone",
-			(BiConsumer<UserEntry, String>)UserEntry::setMobilePhone);
 		attributeGetterFunctions.put("address1", UserEntry::getAddress1);
 		attributeSetterBiConsumers.put(
 			"address1", (BiConsumer<UserEntry, String>)UserEntry::setAddress1);
@@ -389,38 +376,6 @@ public class UserEntryModelImpl
 	@Override
 	public void setUserEntryId(long userEntryId) {
 		_userEntryId = userEntryId;
-	}
-
-	@JSON
-	@Override
-	public String getHomePhone() {
-		if (_homePhone == null) {
-			return "";
-		}
-		else {
-			return _homePhone;
-		}
-	}
-
-	@Override
-	public void setHomePhone(String homePhone) {
-		_homePhone = homePhone;
-	}
-
-	@JSON
-	@Override
-	public String getMobilePhone() {
-		if (_mobilePhone == null) {
-			return "";
-		}
-		else {
-			return _mobilePhone;
-		}
-	}
-
-	@Override
-	public void setMobilePhone(String mobilePhone) {
-		_mobilePhone = mobilePhone;
 	}
 
 	@JSON
@@ -569,8 +524,6 @@ public class UserEntryModelImpl
 		userEntryImpl.setMvccVersion(getMvccVersion());
 		userEntryImpl.setUuid(getUuid());
 		userEntryImpl.setUserEntryId(getUserEntryId());
-		userEntryImpl.setHomePhone(getHomePhone());
-		userEntryImpl.setMobilePhone(getMobilePhone());
 		userEntryImpl.setAddress1(getAddress1());
 		userEntryImpl.setAddress2(getAddress2());
 		userEntryImpl.setCity(getCity());
@@ -657,22 +610,6 @@ public class UserEntryModelImpl
 		}
 
 		userEntryCacheModel.userEntryId = getUserEntryId();
-
-		userEntryCacheModel.homePhone = getHomePhone();
-
-		String homePhone = userEntryCacheModel.homePhone;
-
-		if ((homePhone != null) && (homePhone.length() == 0)) {
-			userEntryCacheModel.homePhone = null;
-		}
-
-		userEntryCacheModel.mobilePhone = getMobilePhone();
-
-		String mobilePhone = userEntryCacheModel.mobilePhone;
-
-		if ((mobilePhone != null) && (mobilePhone.length() == 0)) {
-			userEntryCacheModel.mobilePhone = null;
-		}
 
 		userEntryCacheModel.address1 = getAddress1();
 
@@ -796,8 +733,6 @@ public class UserEntryModelImpl
 	private String _uuid;
 	private String _originalUuid;
 	private long _userEntryId;
-	private String _homePhone;
-	private String _mobilePhone;
 	private String _address1;
 	private String _address2;
 	private String _city;

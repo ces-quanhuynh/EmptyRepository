@@ -16,12 +16,13 @@ package com.liferay.registration.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.*;
 import com.liferay.registration.model.UserEntry;
 import com.liferay.registration.service.base.UserEntryLocalServiceBaseImpl;
 
+import com.liferay.registration.service.persistence.impl.constants.TypeId;
 import com.liferay.registration.validator.BasicInfoValidator;
 import com.liferay.registration.validator.BillingAddressValidator;
 import com.liferay.registration.validator.PhoneValidator;
@@ -78,11 +79,15 @@ public class UserEntryLocalServiceImpl extends UserEntryLocalServiceBaseImpl {
 		_billingAddressValidator.validate(address1,address2,city,state,zipCode);
 		_seSecurityQuestionValidator.validate(securityAnswer);
 
+
 		_userLocalService.updateReminderQuery(user.getUserId(),securityQuestion,securityAnswer);
 
+		_phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(),user.getContactId(),mobilePhone,
+				null, TypeId.MOBILE_PHONE_ID,true,serviceContext);
+		_phoneLocalService.addPhone(user.getUserId(), Contact.class.getName(),user.getContactId(),homePhone,
+				null,TypeId.PERSONAL_PHONE_ID,true,serviceContext);
+
 		userEntry.setUuid(serviceContext.getUuid());
-		userEntry.setHomePhone(homePhone);
-		userEntry.setMobilePhone(mobilePhone);
 		userEntry.setAddress1(address1);
 		userEntry.setAddress1(address2);
 		userEntry.setCity(city);
@@ -97,6 +102,9 @@ public class UserEntryLocalServiceImpl extends UserEntryLocalServiceBaseImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private PhoneLocalService _phoneLocalService;
 
 	@Reference
 	private BasicInfoValidator _basicInfoValidator;

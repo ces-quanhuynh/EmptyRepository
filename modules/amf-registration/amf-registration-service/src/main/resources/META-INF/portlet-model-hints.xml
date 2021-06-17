@@ -5,8 +5,6 @@
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="userEntryId" type="long" />
-		<field name="homePhone" type="String" />
-		<field name="mobilePhone" type="String" />
 		<field name="address1" type="String" />
 		<field name="address2" type="String" />
 		<field name="city" type="String" />
