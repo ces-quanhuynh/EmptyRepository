@@ -20,7 +20,6 @@ import javax.portlet.RenderResponse;
 public class ViewAllAuditEventMVCRenderCommand implements MVCRenderCommand {
     @Override
     public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
-
         return "/adminmonitor/view_all.jsp";
     }
 }

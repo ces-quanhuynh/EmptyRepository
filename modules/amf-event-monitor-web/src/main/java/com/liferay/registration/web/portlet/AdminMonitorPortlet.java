@@ -5,8 +5,15 @@ import com.liferay.registration.web.constants.AdminMonitorPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
+import com.liferay.registration.web.portlet.util.AuditEventUtilDynamic;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
 
 /**
  * @author ces-user
@@ -29,4 +36,12 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class AdminMonitorPortlet extends MVCPortlet {
+	@Override
+	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+		renderRequest.setAttribute("audit", _auditEventUtilDynamic);
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	AuditEventUtilDynamic _auditEventUtilDynamic;
 }
